@@ -3,29 +3,46 @@ int moleY;
 int moleLocation;
 int score;
 int time;
+int interval=60;
+PImage background;
 
 
 void setup(){
  
+   
+  
     size(900,900);
     score=0;
-  time=60;
     moleLocation=(int)random(0,9);
     
-   
+    background(255);
+ 
+  
  }
  
  
+ 
+void time(){
+   time=interval-int(millis()/1000); 
+    if(time == 0){
+      while (true){
+        background(0);
+        fill(255);
+      text("GAME OVER",height/2-100, width/2);
+      text("Score:"+score,height/2-100,width/2-100);
+    }
+    }
+   text("Time:"+time, 500, 400);
+}
 
 
 void draw() {
- 
+  
+ time();
  ground();
  holes();
  mole();
- time();
  score();
- gameOver();
 }
 
 void ground(){
@@ -44,6 +61,8 @@ void holes(){
     fill(0);
     ellipse(210+i,334+j,50,20); 
    }
+   
+  
 }
 }
 void mole() {
@@ -113,44 +132,26 @@ void mole() {
    
 }
 
-void time(){
-  textAlign(CENTER);
-   textSize(50);
-   fill(0);
-   text("Time:"+time,200,100);
-  if(time>0&&frameCount%60==0){
-   time=time-1;
-   
-  }
 
-}
+
+
 void score(){
  fill(0);
  textSize(80);
- text("Score:"+score,350,200);
+ text("Score:"+score,500,200);
 }
 
 
 
 void mouseClicked(){
+ 
   if(mouseX>=moleX-40&&mouseX<=moleX+40&&mouseY>=moleY-20&&mouseY<=moleY+240&&time>0){
     score=score+1;
+
     if(time<=60){
       time=time+1;
     }
       moleLocation=(int)random(0,9);
   }
  
-}
-
-void gameOver(){
-  if(time==0){
-    fill(255);
-    textSize(100);
-    text("Game Over press any key to restart", 300,300);
-      if(keyPressed){
-        setup();
-      }
-  
-}
 }
