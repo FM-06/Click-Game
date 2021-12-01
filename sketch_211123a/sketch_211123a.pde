@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 int mode=0;
 int moleX;
 int moleY;
@@ -6,13 +8,13 @@ int score;
 int time;
 int interval=60;
 PImage backgroundPic;
-
+SoundFile whack;
 
 void setup(){
  backgroundPic=loadImage("background.png");
     textSize(50);
 
- 
+ whack=new SoundFile(this,"whack.wav");
   
     size(900,900);
     score=0;
@@ -311,7 +313,7 @@ void mouseClicked(){
   //if mole is clicked
   if(moleLocation!=9&&mouseX>=moleX-40&&mouseX<=moleX+40&&mouseY>=moleY-20&&mouseY<=moleY+240&&time>0){
     score=score+1;
-
+    whack.play();
     if(time<=60){
       time=time+1;
     }
